@@ -2,7 +2,11 @@ import re
 from pathlib import Path
 from typing import List
 
-import pytesseract as pytesseract
+try:
+    from PIL import Image
+except ImportError:
+    import Image
+import pytesseract
 
 
 def get_files_path_list(path_to_directory: str) -> List[str]:
@@ -22,7 +26,7 @@ def convert_to_number(string: str) -> float:
     return number
 
 
-def get_statistical_data(mas_rows: List[str], file_path: str):
+def get_statistical_data(mas_rows: List[str], file_path: str) -> List[float]:
     mas_stat = []
     for row in mas_rows:
         regex_num = re.compile('\d+')
@@ -41,3 +45,14 @@ def get_data_from_file(file_path: str) -> list:
     mas_rows = data.split("\n")
     statistical_data = get_statistical_data(mas_rows, file_path)
     return statistical_data
+
+
+def get_all_data(path_to_dir: str) -> List[List[float]]:
+    stat_data_list = []
+    files_path_to_img = get_files_path_list(path_to_dir)
+    for file_path in files_path_to_img:
+        stat_data = get_data_from_file(file_path)
+        stat_data_list.append(stat_data)
+    return stat_data_list
+
+
