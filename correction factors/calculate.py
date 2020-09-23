@@ -14,7 +14,7 @@ def calculate_T_n(N: int, sum_insured: float, M: int, payout_amount: float) -> f
     S = sum_insured / N
     S_b = payout_amount / M
     T_o = (S_b / S) * q
-    T_p = 1.2 * T_o * a_y * ((1 - q) / n * q) ** 0.5
+    T_p = 1.2 * T_o * a_y * ((1 - q) / (n * q)) ** 0.5
     T_n = T_o + T_p
     return T_n
 
